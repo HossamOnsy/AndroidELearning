@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "245793868270",
+    "firebase_url": "https://androidelearning-3104f.firebaseio.com",
+    "project_id": "androidelearning-3104f",
+    "storage_bucket": "androidelearning-3104f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245793868270:android:2ec67290c6face61",
+        "android_client_info": {
+          "package_name": "com.salwa.androidelearning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245793868270-cn4sbfb17s87nk81o2oh2hicp27mvdkt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByPFpSBgK12eXtSouGTrUs5WUpiirR_fU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
