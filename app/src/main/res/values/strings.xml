@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AndroidELearning</string>
+    <string name="email">Email:</string>
+    <string name="password">Password:</string>
+    <string name="login">Login</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="sign_up_here">Sign Up Here</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="hello_and_welcome_to_our_app">Hello and Welcome To Our App</string>
 </resources>
