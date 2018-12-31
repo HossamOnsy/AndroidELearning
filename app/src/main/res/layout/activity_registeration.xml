@@ -55,7 +55,84 @@
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:id="@+id/role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
+                <RadioButton
+                    android:id="@+id/teach"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/teacher"
+                    />
+                <RadioButton
+                    android:id="@+id/stud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Student"
+                    />
+                <RadioButton
+                    android:id="@+id/Create"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Creator"
+                    />
+            </RadioGroup>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/Age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/age"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/gender"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"
+                android:id="@+id/male"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/female"
+                android:id="@+id/female"
+                />
+
+        </RadioGroup>
         <Button
             android:id="@+id/register"
             android:layout_width="wrap_content"

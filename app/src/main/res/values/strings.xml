@@ -8,4 +8,12 @@
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="hello_and_welcome_to_our_app">Hello and Welcome To Our App</string>
+    <string name="role">Role</string>
+    <string name="age">Age</string>
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
+    <string name="Creator">Creator</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+
 </resources>
