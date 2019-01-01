@@ -53,7 +53,17 @@ public class MainActivity extends AppCompatActivity {
 //                    String name1 = myPref.getString(pref.name,"Default");
                     textView.setText(name);
                    Intent intent= new Intent(MainActivity.this, StudentActivity.class).
-                           putExtra("model",user);
+                           putExtra("model",user).
+                           putExtra("name",name);
+                    startActivity(intent);
+                }
+                if(user.role.equals( "Teacher")) {
+
+                    String name = String.valueOf(user.name);
+                    textView.setText(name);
+                    Intent intent= new Intent(MainActivity.this, TeacherActivity.class).
+                            putExtra("model",user).
+                            putExtra("name",name);
                     startActivity(intent);
                 }
 

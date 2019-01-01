@@ -110,7 +110,7 @@ public class RegisterationActivity extends AppCompatActivity {
                             mDatabase = FirebaseDatabase.getInstance().getReference("users");
                             String userId = auth.getCurrentUser().getUid();
 
-                            User user = new User(name,email, age,gender,role);
+                            User user = new User(name,email, age,gender,role,"");
 
                             mDatabase.child(userId).setValue(user);
 

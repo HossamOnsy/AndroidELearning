@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".RegisterationActivity" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".StudentActivity"></activity>
+        <activity android:name=".StudentActivity" />
+        <activity android:name=".TeacherActivity"></activity>
     </application>
 
 </manifest>

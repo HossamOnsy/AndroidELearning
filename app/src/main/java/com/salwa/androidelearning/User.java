@@ -10,15 +10,15 @@ public class User implements Parcelable {
     public String age;
     public String gender;
     public String role;
-    public User() {
-    }
+    public String teacher;
 
-    public User(String name, String email, String age, String gender, String role) {
+    public User(String name, String email, String age, String gender, String role ,String teacher) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.gender = gender;
         this.role = role;
+        this.teacher = teacher;
     }
 
     public String getName() {
@@ -61,6 +61,18 @@ public class User implements Parcelable {
         this.role = role;
     }
 
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+
+    public static Creator<User> getCREATOR() {
+        return CREATOR;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -73,6 +85,10 @@ public class User implements Parcelable {
         dest.writeString(this.age);
         dest.writeString(this.gender);
         dest.writeString(this.role);
+        dest.writeString(this.teacher);
+    }
+
+    public User() {
     }
 
     protected User(Parcel in) {
@@ -81,6 +97,7 @@ public class User implements Parcelable {
         this.age = in.readString();
         this.gender = in.readString();
         this.role = in.readString();
+        this.teacher = in.readString();
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
