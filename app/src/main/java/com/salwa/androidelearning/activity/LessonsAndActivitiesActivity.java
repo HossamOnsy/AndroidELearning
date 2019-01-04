@@ -41,6 +41,7 @@ public class LessonsAndActivitiesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
+
         if (getIntent().hasExtra("databasePath")) {
             databasePath = getIntent().getStringExtra("databasePath");
         }
