@@ -31,10 +31,10 @@ public class TeacherOrStudentActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.student_btn:
 
-                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","student"));
+                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","Students"));
                 break;
             case R.id.teacher_btn:
-                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","teacher"));
+                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","Teachers"));
                 break;
         }
     }

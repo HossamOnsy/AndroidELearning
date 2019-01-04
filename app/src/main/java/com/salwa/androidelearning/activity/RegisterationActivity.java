@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -50,6 +51,14 @@ public class RegisterationActivity extends AppCompatActivity {
     @BindView(R.id.contact)
     TextInputEditText contact;
 
+    int tempcheckedId = 0;
+    @BindView(R.id.teach)
+    RadioButton teach;
+    @BindView(R.id.stud)
+    RadioButton stud;
+    @BindView(R.id.Create)
+    RadioButton Create;
+
     private FirebaseAuth auth;
     private DatabaseReference mDatabase;
 
@@ -62,7 +71,29 @@ public class RegisterationActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 //        FirebaseUser currentUser = auth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == teach.getId()) {
+
+                    tempcheckedId = 0;
+                }   else if (checkedId == stud.getId()) {
+                    tempcheckedId = 1;
+
+                }   else if (checkedId == Create.getId()) {
+                    tempcheckedId = 2;
+
+                }
+
+                Log.v("tempcheckedId", "tempcheckedId ->  " + tempcheckedId);
+
+            }
+        });
+
     }
+
+    String role = "teacher";
 
     @OnClick(R.id.register)
     public void onViewClicked() {
@@ -72,9 +103,20 @@ public class RegisterationActivity extends AppCompatActivity {
         final String age = edAge.getText().toString();
         final String name = edName.getText().toString();
 
-        int radioButtonID = radioGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
-        final String role = (String) radioButton.getText();
+        if (tempcheckedId == 0) {
+            role = "teacher";
+        } else if (tempcheckedId == 1) {
+            role = "student";
+
+        } else if (tempcheckedId == 2) {
+            role = "moderator";
+
+        }
+
+//        int radioButtonID = radioGroup.getCheckedRadioButtonId();
+//        RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
+//        final String role = (String) radioButton.getText();
+
 
         int radioButtonID1 = radioGroup1.getCheckedRadioButtonId();
         RadioButton radioButton1 = (RadioButton) radioGroup1.findViewById(radioButtonID1);
@@ -119,7 +161,7 @@ public class RegisterationActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             String userId = auth.getCurrentUser().getUid();
-                            if (role.equals(getString(R.string.student))) {
+                            if (role.equals("student")) {
                                 mDatabase = FirebaseDatabase.getInstance().getReference("Students");
                                 StudentModel studentModel = new StudentModel(userId, name, email, age, gender, role, "", contact.getText().toString());
 
@@ -129,7 +171,7 @@ public class RegisterationActivity extends AppCompatActivity {
 //                                startActivity(new Intent(RegisterationActivity.this, StudentMainActivity.class));
                             } else {
                                 mDatabase = FirebaseDatabase.getInstance().getReference("Teachers");
-                                TeacherModel teacherModel = new TeacherModel(userId, name, email, age, gender, role, contact.getText().toString());
+                                TeacherModel teacherModel = new TeacherModel(name, email, age, gender, role, userId, contact.getText().toString());
 
                                 mDatabase.child(userId).setValue(teacherModel);
                                 finishAffinity();

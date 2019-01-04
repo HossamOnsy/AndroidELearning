@@ -7,21 +7,40 @@
     tools:context=".activity.StudentMainActivity">
 
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Hello Student"/>
-    <TextView
-        android:id="@+id/useerr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent">
+        <Button
+            android:id="@+id/lesson_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
+            android:text="Lessons"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
+            android:text="Activities"
+            android:textAllCaps="false" />
+        <Button
+            android:id="@+id/quiz_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
+            android:text="Quizzes"
+            android:textAllCaps="false" />
+
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.salwa.androidelearning;
+package com.salwa.androidelearning.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,33 +13,47 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.salwa.androidelearning.models.StudentModel;
-import com.salwa.androidelearning.models.TeacherModel;
-import com.salwa.androidelearning.models.User;
-import com.salwa.androidelearning.utils.CustomAdapterForProgress;
+import com.salwa.androidelearning.CustomAdapter;
+import com.salwa.androidelearning.R;
+import com.salwa.androidelearning.TeacherActivity;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TeacherActivity extends AppCompatActivity {
+public class LessonsAndActivitiesActivity extends AppCompatActivity {
 
+    String databasePath = "Lessons";
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private CustomAdapterForProgress mAdapter;
+    ArrayList<String> stringArrayList = new ArrayList<>();
+    DatabaseReference ref1;
+    DatabaseReference ref2;
+    private CustomAdapter mAdapter ;
     DividerItemDecoration mDividerItemDecoration;
     LinearLayoutManager layoutManager;
-    ArrayList<StudentModel> list;
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher);
+        setContentView(R.layout.activity_lessons_and_activities);
         ButterKnife.bind(this);
-        list = new ArrayList<StudentModel>();
-        mAdapter = new CustomAdapterForProgress(list, TeacherActivity.this, "Teacher");
+
+
+        if (getIntent().hasExtra("databasePath")) {
+            databasePath = getIntent().getStringExtra("databasePath");
+        }
+        ref1 = FirebaseDatabase.getInstance().getReference();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        stringArrayList = new ArrayList<String>();
+        mAdapter = new CustomAdapter(stringArrayList , LessonsAndActivitiesActivity.this,databasePath);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -47,22 +61,23 @@ public class TeacherActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(mDividerItemDecoration);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-//        user = getIntent().getParcelableExtra("model");
-        String name = getIntent().getStringExtra("name");
 
-
-        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference ref2;
-        ref2 = ref1.child("Students");
-        ref2.orderByChild("teacher").equalTo(name).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref2 = ref1.child(databasePath);
+        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                ArrayList Userlist = new ArrayList<String>();
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    StudentModel user = dsp.getValue(StudentModel.class);
-                    list.add(user);
+                    String stringTest = dsp.getValue(String.class);
+//                    Userlist.add(user.getName());
+//                    NameIdModel nameIdModel = new NameIdModel();
+//                    nameIdModel.setName(user.getName());
+//                    nameIdModel.setID(user.getId());
+                    stringArrayList.add(stringTest);
 
                     mAdapter.notifyDataSetChanged();
+//                    ArrayAdapter adapter = new ArrayAdapter(LessonsAndActivitiesActivity.this, android.R.layout.simple_spinner_item, Userlist);
+//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
                 }
@@ -75,6 +90,14 @@ public class TeacherActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
 
     }
 }

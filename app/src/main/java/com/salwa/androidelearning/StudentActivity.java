@@ -140,11 +140,11 @@ public class StudentActivity extends AppCompatActivity {
                             String userId = auth.getCurrentUser().getUid();
                             DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference ref2;
-                            ref2 = ref1.child("users");
+                            ref2 = ref1.child("Students");
                             myPref = getsharedPref(StudentActivity.this);
                             ref2.child(userId).child("teacher").setValue(name);
 
-                            setStudentToTeacher(name,userId);
+//                            setStudentToTeacher(name,userId);
 
                         } catch (Exception e) {
                             e.printStackTrace();

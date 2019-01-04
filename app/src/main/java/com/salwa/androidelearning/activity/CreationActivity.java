@@ -32,9 +32,10 @@ public class CreationActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.lesson_btn:
-                    startActivity(new Intent(CreationActivity.this,LessonCreationActivity.class));
+                    startActivity(new Intent(CreationActivity.this,LessonCreationActivity.class).putExtra("databasePath","Lessons"));
                 break;
             case R.id.activity_btn:
+                startActivity(new Intent(CreationActivity.this,LessonCreationActivity.class).putExtra("databasePath","Activities"));
                 break;
             case R.id.quiz_btn:
                 break;

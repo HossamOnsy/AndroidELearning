@@ -1,4 +1,4 @@
-package com.salwa.androidelearning;
+package com.salwa.androidelearning.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,33 +13,35 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.salwa.androidelearning.CustomAdapter;
+import com.salwa.androidelearning.R;
 import com.salwa.androidelearning.models.StudentModel;
-import com.salwa.androidelearning.models.TeacherModel;
 import com.salwa.androidelearning.models.User;
-import com.salwa.androidelearning.utils.CustomAdapterForProgress;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TeacherActivity extends AppCompatActivity {
+public class ProgressActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private CustomAdapterForProgress mAdapter;
+    private CustomAdapter mAdapter;
     DividerItemDecoration mDividerItemDecoration;
     LinearLayoutManager layoutManager;
-    ArrayList<StudentModel> list;
+    ArrayList list;
     User user;
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher);
+        setContentView(R.layout.activity_progress);
+
         ButterKnife.bind(this);
-        list = new ArrayList<StudentModel>();
-        mAdapter = new CustomAdapterForProgress(list, TeacherActivity.this, "Teacher");
+        list = new ArrayList<String>();
+        mAdapter = new CustomAdapter(list, ProgressActivity.this, "");
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -49,17 +51,17 @@ public class TeacherActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 //        user = getIntent().getParcelableExtra("model");
         String name = getIntent().getStringExtra("name");
-
+        uid = getIntent().getStringExtra("uid");
 
         DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ref2;
-        ref2 = ref1.child("Students");
-        ref2.orderByChild("teacher").equalTo(name).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref2 = ref1.child("Progress");
+        ref2.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    StudentModel user = dsp.getValue(StudentModel.class);
+                    String user = dsp.getValue(String.class);
                     list.add(user);
 
                     mAdapter.notifyDataSetChanged();
@@ -75,6 +77,7 @@ public class TeacherActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 }

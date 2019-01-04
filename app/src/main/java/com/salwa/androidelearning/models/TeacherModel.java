@@ -10,8 +10,21 @@ public class TeacherModel implements Parcelable {
     private String age;
     private String gender;
     private String role;
-    private String ID;
+    private String id;
     private String contactNumber;
+
+    public TeacherModel() {
+    }
+
+    public TeacherModel(String name, String email, String age, String gender, String role, String id, String contactNumber) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.role = role;
+        this.id = id;
+        this.contactNumber = contactNumber;
+    }
 
     public String getName() {
         return name;
@@ -53,12 +66,12 @@ public class TeacherModel implements Parcelable {
         this.role = role;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContactNumber() {
@@ -67,21 +80,6 @@ public class TeacherModel implements Parcelable {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
-    }
-
-    public TeacherModel(String ID,String name, String email, String age, String gender, String role,  String contactNumber) {
-
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.gender = gender;
-        this.role = role;
-        this.ID = ID;
-        this.contactNumber = contactNumber;
-    }
-
-    public TeacherModel() {
-
     }
 
     @Override
@@ -96,7 +94,7 @@ public class TeacherModel implements Parcelable {
         dest.writeString(this.age);
         dest.writeString(this.gender);
         dest.writeString(this.role);
-        dest.writeString(this.ID);
+        dest.writeString(this.id);
         dest.writeString(this.contactNumber);
     }
 
@@ -106,7 +104,7 @@ public class TeacherModel implements Parcelable {
         this.age = in.readString();
         this.gender = in.readString();
         this.role = in.readString();
-        this.ID = in.readString();
+        this.id = in.readString();
         this.contactNumber = in.readString();
     }
 
