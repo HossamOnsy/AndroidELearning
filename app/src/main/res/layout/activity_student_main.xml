@@ -7,16 +7,43 @@
     tools:context=".activity.StudentMainActivity">
 
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16sp"
+        android:padding="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/feedback_txt"
+            android:layout_width="match_parent"
+            android:text="hello"
+            android:padding="16sp"
+            android:layout_height="match_parent" />
+
+    </android.support.v7.widget.CardView>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">
+
         <Button
             android:id="@+id/lesson_btn"
             android:layout_width="wrap_content"
@@ -32,6 +59,7 @@
             android:layout_margin="16sp"
             android:text="Activities"
             android:textAllCaps="false" />
+
         <Button
             android:id="@+id/quiz_btn"
             android:layout_width="wrap_content"

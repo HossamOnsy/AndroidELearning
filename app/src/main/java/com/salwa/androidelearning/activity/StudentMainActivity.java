@@ -1,11 +1,11 @@
 package com.salwa.androidelearning.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +46,10 @@ public class StudentMainActivity extends AppCompatActivity {
     Button activityBtn;
     @BindView(R.id.quiz_btn)
     Button quizBtn;
+    @BindView(R.id.guideline1)
+    Guideline guideline1;
+    @BindView(R.id.feedback_txt)
+    TextView feedbackTxt;
     private DatabaseReference mDatabase;
     SharedPreferences myPref;
 
@@ -89,10 +94,16 @@ public class StudentMainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 studentModel = dataSnapshot.getValue(StudentModel.class);
+                if (studentModel != null) {
+                    if (studentModel.getTeacherfeedback() != null && !studentModel.getTeacherfeedback().equals("") &&
+                            studentModel.getTeacher() != null && !studentModel.getTeacher().equals("")) {
+                        feedbackTxt.setText(String.format("%s : %s", studentModel.getTeacher(), studentModel.getTeacherfeedback()));
+                    }
+                }
+
                 if (studentModel.getTeacher() == null || studentModel.getTeacher().equals("")) {
                     onCreateDialog();
                 }
-
             }
 
             @Override
@@ -101,8 +112,6 @@ public class StudentMainActivity extends AppCompatActivity {
 //                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
-
     }
 
     int selected = 0;
@@ -150,10 +159,7 @@ public class StudentMainActivity extends AppCompatActivity {
 
                         }
                     });
-
                 }
-
-
             }
 
             @Override
@@ -163,32 +169,24 @@ public class StudentMainActivity extends AppCompatActivity {
         });
 
         builder.setView(view)
-
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        try {
-                            myPref = getsharedPref(StudentMainActivity.this);
-                            String name = myPref.getString(pref.name, "name");
-                            Log.v("heyyy", name);
-                            auth = FirebaseAuth.getInstance();
-                            String userId = auth.getCurrentUser().getUid();
-                            DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
-                            DatabaseReference ref2;
-                            ref2 = ref1.child("Students");
-                            myPref = getsharedPref(StudentMainActivity.this);
-                            ref2.child(userId).child("teacher").setValue(name);
-
+                .setPositiveButton("OK", (dialog, id) -> {
+                    try {
+                        myPref = getsharedPref(StudentMainActivity.this);
+                        String name = myPref.getString(pref.name, "name");
+                        Log.v("heyyy", name);
+                        auth = FirebaseAuth.getInstance();
+                        String userId = auth.getCurrentUser().getUid();
+                        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
+                        DatabaseReference ref2;
+                        ref2 = ref1.child("Students");
+                        myPref = getsharedPref(StudentMainActivity.this);
+                        ref2.child(userId).child("teacher").setValue(name);
 //                            setStudentToTeacher(name,userId);
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                })
-        ;
+                });
         builder.create().show();
     }
 

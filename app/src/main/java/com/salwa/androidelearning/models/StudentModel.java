@@ -12,13 +12,15 @@ public class StudentModel implements Parcelable {
     private String role;
     private String teacher;
     private String myclass;
+    private String teacherfeedback;
     private String ID;
     private String contactNumber;
 
     public StudentModel() {
+
     }
 
-    public StudentModel( String ID,String name, String email, String age, String gender, String role, String teacher, String contactNumber) {
+    public StudentModel(String name, String email, String age, String gender, String role, String teacher, String ID, String contactNumber) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -85,6 +87,14 @@ public class StudentModel implements Parcelable {
         this.myclass = myclass;
     }
 
+    public String getTeacherfeedback() {
+        return teacherfeedback;
+    }
+
+    public void setTeacherfeedback(String teacherfeedback) {
+        this.teacherfeedback = teacherfeedback;
+    }
+
     public String getID() {
         return ID;
     }
@@ -115,6 +125,7 @@ public class StudentModel implements Parcelable {
         dest.writeString(this.role);
         dest.writeString(this.teacher);
         dest.writeString(this.myclass);
+        dest.writeString(this.teacherfeedback);
         dest.writeString(this.ID);
         dest.writeString(this.contactNumber);
     }
@@ -127,6 +138,7 @@ public class StudentModel implements Parcelable {
         this.role = in.readString();
         this.teacher = in.readString();
         this.myclass = in.readString();
+        this.teacherfeedback = in.readString();
         this.ID = in.readString();
         this.contactNumber = in.readString();
     }
@@ -141,5 +153,6 @@ public class StudentModel implements Parcelable {
         public StudentModel[] newArray(int size) {
             return new StudentModel[size];
         }
+
     };
 }

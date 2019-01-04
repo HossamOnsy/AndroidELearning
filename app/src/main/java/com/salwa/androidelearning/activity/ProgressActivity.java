@@ -1,12 +1,18 @@
 package com.salwa.androidelearning.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,18 +21,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.salwa.androidelearning.CustomAdapter;
 import com.salwa.androidelearning.R;
-import com.salwa.androidelearning.models.StudentModel;
 import com.salwa.androidelearning.models.User;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProgressActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.feedback_btn)
+    Button feedbackBtn;
     private CustomAdapter mAdapter;
     DividerItemDecoration mDividerItemDecoration;
     LinearLayoutManager layoutManager;
@@ -63,7 +71,6 @@ public class ProgressActivity extends AppCompatActivity {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     String user = dsp.getValue(String.class);
                     list.add(user);
-
                     mAdapter.notifyDataSetChanged();
 
 
@@ -78,6 +85,42 @@ public class ProgressActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void showChangeLangDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
+
+        dialogBuilder.setTitle("Feed Back");
+        dialogBuilder.setMessage("Enter text below");
+        dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do something with edt.getText().toString();
+
+                DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference ref2 =ref1.child("Students");
+
+                ref2.child(uid).child("teacherfeedback").setValue( edt.getText().toString());
+                feedbackBtn.setEnabled(false);
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+    }
+
+    @OnClick(R.id.feedback_btn)
+    public void onViewClicked() {
+        showChangeLangDialog();
 
     }
 }

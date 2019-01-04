@@ -49,7 +49,9 @@
             android:name=".activity.VideoPreview"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ProgressActivity"></activity>
+        <activity android:name=".activity.ProgressActivity" />
+        <activity android:name=".activity.QuizzesCreation" />
+        <activity android:name=".activity.QuizActivity"></activity>
     </application>
 
 </manifest>

@@ -31,13 +31,17 @@ public class CreationActivity extends AppCompatActivity {
     @OnClick({R.id.lesson_btn, R.id.activity_btn, R.id.quiz_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+
             case R.id.lesson_btn:
-                    startActivity(new Intent(CreationActivity.this,LessonCreationActivity.class).putExtra("databasePath","Lessons"));
+                startActivity(new Intent(CreationActivity.this, LessonCreationActivity.class).putExtra("databasePath", "Lessons"));
                 break;
+
             case R.id.activity_btn:
-                startActivity(new Intent(CreationActivity.this,LessonCreationActivity.class).putExtra("databasePath","Activities"));
+                startActivity(new Intent(CreationActivity.this, LessonCreationActivity.class).putExtra("databasePath", "Activities"));
                 break;
+
             case R.id.quiz_btn:
+                startActivity(new Intent(CreationActivity.this, QuizzesCreation.class).putExtra("databasePath", "Quizzes"));
                 break;
         }
     }

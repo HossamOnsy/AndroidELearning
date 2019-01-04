@@ -157,7 +157,8 @@ public class LoginActivity extends AppCompatActivity {
                         {
                             startActivity(new Intent(LoginActivity.this, TeacherMainActivity.class).putExtra("name",user.getName()));
                             //                                    startActivity(new Intent(LoginActivity.this, TeacherTempMain.class));
-                            finish();
+
+                            finishAffinity();
                             progressBar.setVisibility(View.GONE);
 
 
@@ -190,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(new Intent(LoginActivity.this, StudentMainActivity.class));
 //                                    startActivity(new Intent(LoginActivity.this, TeacherTempMain.class));
 
-                        finish();
+                        finishAffinity();
 
 
                     } else {

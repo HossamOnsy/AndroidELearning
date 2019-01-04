@@ -59,6 +59,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LessonCreationActivity extends AppCompatActivity {
+
     FirebaseStorage storage;
     StorageReference storageRef;
     SimpleExoPlayer player;
@@ -90,6 +91,7 @@ public class LessonCreationActivity extends AppCompatActivity {
         if(getIntent().hasExtra("databasePath")){
             databasePath = getIntent().getStringExtra("databasePath");
         }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -106,22 +108,7 @@ public class LessonCreationActivity extends AppCompatActivity {
     }
 
     void uploadFile() {
-//        Intent chooseFile;
-//        Intent intent;
-//
-//        String[] mimeTypes = { "text/plain"};
-//        Intent intent = new Intent()
-//                .putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-//                .putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-//                .setType("file/*")
-//                //.setAction(Intent.ACTION_OPEN_DOCUMENT);
-//                .setAction(Intent.ACTION_GET_CONTENT);
-//
-//        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-//        chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
-//        chooseFile.setType("file/*");
-//        intent = Intent.createChooser(chooseFile, "Choose a file");
-//        startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
+
 
         String[] mimeTypes = {"*/*"};
         Intent intent = new Intent()
@@ -449,6 +436,17 @@ public class LessonCreationActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            uploadFile();
+            //resume tasks needing this permission
+        } else {
+            Toast.makeText(this, "Please you need to allow permission to choose your video to upload it "
+                    , Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void initializePlayer(Uri uri) {
         if (uri != null) {
@@ -526,17 +524,7 @@ public class LessonCreationActivity extends AppCompatActivity {
                 new DefaultExtractorsFactory(), null, null);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            uploadFile();
-            //resume tasks needing this permission
-        } else {
-            Toast.makeText(this, "Please you need to allow permission to choose your video to upload it "
-                    , Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};

@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.salwa.androidelearning.activity.ProgressActivity;
+import com.salwa.androidelearning.activity.QuizActivity;
+import com.salwa.androidelearning.activity.QuizzesActivity;
 import com.salwa.androidelearning.activity.VideoPreview;
+import com.salwa.androidelearning.models.QuizModel;
 
 import java.util.ArrayList;
 
@@ -61,6 +64,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 holder.name.setText(list.get(position).toString());
                 break;
             }
+            case "Quizzes": {
+
+                holder.name.setText("Quiz : " + t);
+
+                break;
+
+            }
             default: {
                 holder.name.setText(list.get(position).toString());
                 break;
@@ -85,6 +95,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                     case "Teacher": {
                         Context.startActivity(new Intent(Context, ProgressActivity.class).putExtra("uri", list.get(position).toString()));
                         break;
+                    }
+                    case "Quizzes": {
+                        Context.startActivity(new Intent(Context, QuizActivity.class).putExtra("quizModel", (QuizModel) list.get(position))
+                                .putExtra("type_Of_Actvitiy", "Checked " + "Quiz: " + t));
+
                     }
                 }
 
