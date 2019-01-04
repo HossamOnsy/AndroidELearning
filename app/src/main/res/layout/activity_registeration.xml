@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -75,7 +75,7 @@
                     android:id="@+id/stud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Student"
+                    android:text="@string/student"
                     />
                 <RadioButton
                     android:id="@+id/Create"
@@ -110,7 +110,18 @@
                 android:inputType="textEmailAddress" />
 
         </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/contact_info"
+                android:inputType="textEmailAddress" />
+
+        </android.support.design.widget.TextInputLayout>
 
 
         <RadioGroup

@@ -1,24 +1,32 @@
-package com.salwa.androidelearning;
+package com.salwa.androidelearning.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class User implements Parcelable {
+public class StudentModel implements Parcelable {
 
-    public String name;
-    public String email;
-    public String age;
-    public String gender;
-    public String role;
-    public String teacher;
+    private String name;
+    private String email;
+    private String age;
+    private String gender;
+    private String role;
+    private String teacher;
+    private String myclass;
+    private String ID;
+    private String contactNumber;
 
-    public User(String name, String email, String age, String gender, String role ,String teacher) {
+    public StudentModel() {
+    }
+
+    public StudentModel( String ID,String name, String email, String age, String gender, String role, String teacher, String contactNumber) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.gender = gender;
         this.role = role;
         this.teacher = teacher;
+        this.ID = ID;
+        this.contactNumber = contactNumber;
     }
 
     public String getName() {
@@ -69,8 +77,28 @@ public class User implements Parcelable {
         this.teacher = teacher;
     }
 
-    public static Creator<User> getCREATOR() {
-        return CREATOR;
+    public String getMyclass() {
+        return myclass;
+    }
+
+    public void setMyclass(String myclass) {
+        this.myclass = myclass;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     @Override
@@ -86,29 +114,32 @@ public class User implements Parcelable {
         dest.writeString(this.gender);
         dest.writeString(this.role);
         dest.writeString(this.teacher);
+        dest.writeString(this.myclass);
+        dest.writeString(this.ID);
+        dest.writeString(this.contactNumber);
     }
 
-    public User() {
-    }
-
-    protected User(Parcel in) {
+    protected StudentModel(Parcel in) {
         this.name = in.readString();
         this.email = in.readString();
         this.age = in.readString();
         this.gender = in.readString();
         this.role = in.readString();
         this.teacher = in.readString();
+        this.myclass = in.readString();
+        this.ID = in.readString();
+        this.contactNumber = in.readString();
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Parcelable.Creator<StudentModel> CREATOR = new Parcelable.Creator<StudentModel>() {
         @Override
-        public User createFromParcel(Parcel source) {
-            return new User(source);
+        public StudentModel createFromParcel(Parcel source) {
+            return new StudentModel(source);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public StudentModel[] newArray(int size) {
+            return new StudentModel[size];
         }
     };
 }

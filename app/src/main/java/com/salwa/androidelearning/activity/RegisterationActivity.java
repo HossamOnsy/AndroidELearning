@@ -1,4 +1,4 @@
-package com.salwa.androidelearning;
+package com.salwa.androidelearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.salwa.androidelearning.R;
+import com.salwa.androidelearning.models.StudentModel;
+import com.salwa.androidelearning.models.TeacherModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,17 +36,19 @@ public class RegisterationActivity extends AppCompatActivity {
     @BindView(R.id.ed_re_password)
     TextInputEditText edRePassword;
     @BindView(R.id.Age)
-    TextInputEditText edAge ;
+    TextInputEditText edAge;
     @BindView(R.id.name)
-    TextInputEditText edName ;
+    TextInputEditText edName;
     @BindView(R.id.register)
     Button register;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.role)
-    RadioGroup radioGroup ;
+    RadioGroup radioGroup;
     @BindView(R.id.gender)
-    RadioGroup radioGroup1 ;
+    RadioGroup radioGroup1;
+    @BindView(R.id.contact)
+    TextInputEditText contact;
 
     private FirebaseAuth auth;
     private DatabaseReference mDatabase;
@@ -68,11 +73,11 @@ public class RegisterationActivity extends AppCompatActivity {
         final String name = edName.getText().toString();
 
         int radioButtonID = radioGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = (RadioButton)  radioGroup.findViewById(radioButtonID);
+        RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
         final String role = (String) radioButton.getText();
 
         int radioButtonID1 = radioGroup1.getCheckedRadioButtonId();
-        RadioButton radioButton1 = (RadioButton)  radioGroup1.findViewById(radioButtonID1);
+        RadioButton radioButton1 = (RadioButton) radioGroup1.findViewById(radioButtonID1);
         final String gender = (String) radioButton1.getText();
 
         if (TextUtils.isEmpty(email)) {
@@ -88,6 +93,12 @@ public class RegisterationActivity extends AppCompatActivity {
         if (!password.equals(repassword)) {
             Toast.makeText(this, "Password Mismatch !!!", Toast.LENGTH_SHORT).show();
             return;
+        }
+        String contacttemp = contact.getText().toString();
+        if (TextUtils.isEmpty(contacttemp)) {
+            Toast.makeText(this, "Please Enter Contact Info", Toast.LENGTH_SHORT).show();
+            return;
+
         }
 
       /*  if (password.length() < 6) {
@@ -107,15 +118,26 @@ public class RegisterationActivity extends AppCompatActivity {
                             Toast.makeText(RegisterationActivity.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            mDatabase = FirebaseDatabase.getInstance().getReference("users");
                             String userId = auth.getCurrentUser().getUid();
+                            if (role.equals(getString(R.string.student))) {
+                                mDatabase = FirebaseDatabase.getInstance().getReference("Students");
+                                StudentModel studentModel = new StudentModel(userId, name, email, age, gender, role, "", contact.getText().toString());
 
-                            User user = new User(name,email, age,gender,role,"");
+                                mDatabase.child(userId).setValue(studentModel);
+                                finishAffinity();
+                                startActivity(new Intent(RegisterationActivity.this, TeacherOrStudentActivity.class));
+//                                startActivity(new Intent(RegisterationActivity.this, StudentMainActivity.class));
+                            } else {
+                                mDatabase = FirebaseDatabase.getInstance().getReference("Teachers");
+                                TeacherModel teacherModel = new TeacherModel(userId, name, email, age, gender, role, contact.getText().toString());
 
-                            mDatabase.child(userId).setValue(user);
+                                mDatabase.child(userId).setValue(teacherModel);
+                                finishAffinity();
+                                startActivity(new Intent(RegisterationActivity.this, TeacherOrStudentActivity.class));
 
-                            startActivity(new Intent(RegisterationActivity.this, MainActivity.class));
+                            }
                             finish();
+
                         }
                     }
                 });

@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.salwa.androidelearning">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
+        android:appComponentFactory="whateverString"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        android:theme="@style/AppTheme"
+        tools:replace="android:appComponentFactory">
+        <activity android:name=".activity.StudentMainActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegisterationActivity" />
+        <activity android:name=".activity.ForgotPassword" />
+        <activity android:name=".StudentActivity" />
+        <activity android:name=".TeacherActivity" />
+        <activity android:name=".activity.TeacherMainActivity" />
+        <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterationActivity" />
-        <activity android:name=".ForgotPassword" />
-        <activity android:name=".StudentActivity" />
-        <activity android:name=".TeacherActivity"></activity>
+        <activity android:name=".activity.TeacherOrStudentActivity" />
+        <activity android:name=".activity.CreationActivity" />
+        <activity android:name=".activity.LessonCreationActivity"></activity>
     </application>
 
 </manifest>

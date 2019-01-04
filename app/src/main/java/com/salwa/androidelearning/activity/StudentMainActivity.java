@@ -1,4 +1,4 @@
-package com.salwa.androidelearning;
+package com.salwa.androidelearning.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,13 +13,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.salwa.androidelearning.R;
+import com.salwa.androidelearning.StudentActivity;
+import com.salwa.androidelearning.TeacherActivity;
+import com.salwa.androidelearning.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.salwa.androidelearning.pref.getsharedPref;
 
-public class MainActivity extends AppCompatActivity {
+public class StudentMainActivity extends AppCompatActivity {
      @BindView(R.id.useerr)
     TextView textView ;
      FirebaseAuth auth;
@@ -30,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_student_main);
         ButterKnife.bind(this);
-        myPref = getsharedPref(MainActivity.this);
+        myPref = getsharedPref(StudentMainActivity.this);
          final String TAG = "erorrr";
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -43,28 +47,30 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 User user = dataSnapshot.getValue(User.class);
-                if(user.role.equals( "Student")) {
+                if(user.getRole().equals( "Student")) {
 
-                    String name = String.valueOf(user.name);
+                    String name = String.valueOf(user.getName());
 //                    SharedPreferences.Editor editor = myPref.edit();
 //                    editor.putString(pref.name, name);
 //                    editor.apply();
 //                    editor.commit();
 //                    String name1 = myPref.getString(pref.name,"Default");
                     textView.setText(name);
-                   Intent intent= new Intent(MainActivity.this, StudentActivity.class).
+                   Intent intent= new Intent(StudentMainActivity.this, StudentActivity.class).
                            putExtra("model",user).
                            putExtra("name",name);
                     startActivity(intent);
+                    finish();
                 }
-                if(user.role.equals( "Teacher")) {
+                if(user.getRole().equals( "Teacher")) {
 
-                    String name = String.valueOf(user.name);
+                    String name = String.valueOf(user.getName());
                     textView.setText(name);
-                    Intent intent= new Intent(MainActivity.this, TeacherActivity.class).
+                    Intent intent= new Intent(StudentMainActivity.this, TeacherActivity.class).
                             putExtra("model",user).
                             putExtra("name",name);
                     startActivity(intent);
+                    finish();
                 }
 
             }
