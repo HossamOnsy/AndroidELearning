@@ -1,6 +1,8 @@
 package com.salwa.androidelearning.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +37,8 @@ public class ProgressActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.feedback_btn)
     Button feedbackBtn;
+    @BindView(R.id.profile_ofstudent)
+    Button profileOfstudent;
     private CustomAdapter mAdapter;
     DividerItemDecoration mDividerItemDecoration;
     LinearLayoutManager layoutManager;
@@ -96,20 +100,28 @@ public class ProgressActivity extends AppCompatActivity {
 
         final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
 
-        dialogBuilder.setTitle("Feed Back");
-        dialogBuilder.setMessage("Enter text below");
-        dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+        SharedPreferences settings = getSharedPreferences("defauty", MODE_PRIVATE);
+        String value = settings.getString("key", "");
+        if(value.equals("en")) {
+            dialogBuilder.setTitle("Feed Back");
+            dialogBuilder.setMessage("Enter text below");
+        }else{
+
+            dialogBuilder.setTitle("التقييم");
+            dialogBuilder.setMessage("من فضلك ادخل تقييمك هنا");
+        }
+        dialogBuilder.setPositiveButton(getString(R.string.done), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
 
                 DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference ref2 =ref1.child("Students");
+                DatabaseReference ref2 = ref1.child("Students");
 
-                ref2.child(uid).child("teacherfeedback").setValue( edt.getText().toString());
+                ref2.child(uid).child("teacherfeedback").setValue(edt.getText().toString());
                 feedbackBtn.setEnabled(false);
             }
         });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //pass
             }
@@ -118,9 +130,18 @@ public class ProgressActivity extends AppCompatActivity {
         b.show();
     }
 
-    @OnClick(R.id.feedback_btn)
-    public void onViewClicked() {
-        showChangeLangDialog();
 
+
+    @OnClick({R.id.profile_ofstudent, R.id.feedback_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.profile_ofstudent:
+                startActivity(new Intent(ProgressActivity.this,StudentProfile.class).putExtra("id",uid
+                ));
+                break;
+            case R.id.feedback_btn:
+                showChangeLangDialog();
+                break;
+        }
     }
 }

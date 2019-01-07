@@ -2,6 +2,7 @@ package com.salwa.androidelearning.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,12 @@ import com.salwa.androidelearning.models.StudentModel;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class CustomAdapterForProgress extends RecyclerView.Adapter<CustomAdapterForProgress.MyViewHolder> {
 
     private ArrayList<StudentModel> list;
-    android.content.Context Context ;
+    android.content.Context context ;
     String fromActivity;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -31,9 +34,9 @@ public class CustomAdapterForProgress extends RecyclerView.Adapter<CustomAdapter
     }
 
 
-    public CustomAdapterForProgress(ArrayList<StudentModel> list , Context Context, String fromActivity)
+    public CustomAdapterForProgress(ArrayList<StudentModel> list , Context context, String fromActivity)
     {
-        this.Context = Context;
+        this.context = context;
         this.list =list;
         this.fromActivity = fromActivity;
     }
@@ -49,14 +52,23 @@ public class CustomAdapterForProgress extends RecyclerView.Adapter<CustomAdapter
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
+        SharedPreferences settings = context.getSharedPreferences("defauty", MODE_PRIVATE);
+        String value = settings.getString("key", "");
         int t = position+1;
         switch (fromActivity){
             case "Lessons" : {
-                holder.name.setText("Lesson : " + t);
+
+                if(value.equals("en"))
+                 holder.name.setText("Lesson : " + t);
+                else
+                    holder.name.setText("درس رقم : " + t);
                 break;
             }
             case "Activities" : {
-                holder.name.setText("Activity : " + t);
+                if(value.equals("en"))
+                    holder.name.setText("Activity : " + t);
+                else
+                    holder.name.setText("نشاط رقم : " + t);
                 break;
             }
             case "Teacher" : {
@@ -69,7 +81,7 @@ public class CustomAdapterForProgress extends RecyclerView.Adapter<CustomAdapter
             }
         }
 
-        holder.itemView.setOnClickListener(v -> Context.startActivity(new Intent(Context,ProgressActivity.class).putExtra("uid",list.get(position).getID())
+        holder.itemView.setOnClickListener(v -> context.startActivity(new Intent(context,ProgressActivity.class).putExtra("uid",list.get(position).getID())
                 .putExtra("name",list.get(position).getName())));
     }
 

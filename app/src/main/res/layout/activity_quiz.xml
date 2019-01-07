@@ -59,22 +59,24 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
-            <RadioButton
-                android:id="@+id/answer_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/image_one"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toTopOf="@id/guideline3"
-                app:layout_constraintEnd_toEndOf="@id/guideline_a"
-                app:layout_constraintStart_toEndOf="@id/answer_one"
-                app:layout_constraintTop_toTopOf="@id/answer_one" />
+                <RadioButton
+                    android:id="@+id/answer_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_one"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="fitXY"
+                    android:padding="8sp"
+                    app:layout_constraintBottom_toTopOf="@id/guideline3"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_a"
+                    app:layout_constraintStart_toEndOf="@id/answer_one"
+                    app:layout_constraintTop_toTopOf="@id/answer_one" />
 
             <RadioButton
                 android:id="@+id/answer_two"
@@ -88,6 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
+                android:padding="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guideline_a"
                 app:layout_constraintStart_toEndOf="@id/answer_two"
@@ -107,6 +110,7 @@
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toTopOf="@id/guideline3"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:padding="8sp"
                 app:layout_constraintStart_toEndOf="@id/answer_three"
                 app:layout_constraintTop_toTopOf="@id/answer_three" />
 
@@ -123,6 +127,7 @@
                 android:id="@+id/image_four"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:padding="8sp"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

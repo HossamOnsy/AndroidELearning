@@ -118,6 +118,7 @@ public class LessonCreationActivity extends AppCompatActivity {
                 //.setAction(Intent.ACTION_OPEN_DOCUMENT);
                 .setAction(Intent.ACTION_GET_CONTENT);
 
+
         startActivityForResult(Intent.createChooser(intent, "Select a file"), ACTIVITY_CHOOSE_FILE);
     }
 

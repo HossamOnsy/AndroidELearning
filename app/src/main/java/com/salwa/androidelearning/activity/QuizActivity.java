@@ -1,8 +1,12 @@
 package com.salwa.androidelearning.activity;
 
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -104,33 +108,133 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Loading Error Occured", Toast.LENGTH_SHORT).show();
             finish();
         }
+//        answerThree.setdr
 
 
     }
 
+    DatabaseReference ref1;
+    DatabaseReference ref2;
 
-    @OnClick({R.id.submit_btn, R.id.image_one, R.id.image_two, R.id.image_three, R.id.image_four})
+    @OnClick({R.id.answer_one, R.id.answer_two, R.id.answer_three, R.id.answer_four,R.id.submit_btn, R.id.image_one, R.id.image_two, R.id.image_three, R.id.image_four})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.submit_btn:
 
-                DatabaseReference ref1;
-                DatabaseReference ref2;
 
+//                Glide.with(this).load(GIF_URI).into(new GlideDrawableImageViewTarget(IMAGE_VIEW));
 
-                ref1 = FirebaseDatabase.getInstance().getReference();
-                ref2 = ref1.child("Progress");
-                if (quizModel != null && quizModel.getCorrectAnswer() != null) {
-                    ref2.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).push().setValue(type_Of_Actvitiy
-                            + " , He Answered Answer Number : " + checked + ", And The Correct Answer is Answer Number "
-                            + quizModel.getCorrectAnswer() + " ");
-                    finish();
+                if (String.valueOf(checked).equals(quizModel.getCorrectAnswer())) {
+//                    MediaPlayer mp = new MediaPlayer();
+
+                    try {
+//                        mp.setDataSource(R.raw.yay);
+//                        mp.prepare();
+//                        mp.start();
+
+//                        int resID=getResources().getIdentifier(fname, "raw", getPackageName());
+
+                        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.yay);
+                        mediaPlayer.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.v("heyyy", "if Exception : " + e.getMessage());
+                    }
+                    switch (checked) {
+                        case 1: {
+                            imageOne.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                        case 2: {
+                            imageTwo.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                        case 3: {
+                            imageThree.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                        case 4: {
+                            imageFour.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                    }
+
                 } else {
-                    Toast.makeText(this, "Please Choose an Answer", Toast.LENGTH_SHORT).show();
+                    switch (Integer.parseInt(quizModel.getCorrectAnswer())) {
+                        case 1: {
+                            imageOne.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                        case 2: {
+                            imageTwo.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                        case 3: {
+                            imageThree.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                        case 4: {
+                            imageFour.setBackgroundColor(Color.rgb(60, 179, 113));
+                            break;
+                        }
+                    }
+                    switch (checked) {
+                        case 1: {
+                            imageOne.setBackgroundColor(Color.rgb(139, 0, 0));
+                            break;
+                        }
+                        case 2: {
+                            imageTwo.setBackgroundColor(Color.rgb(139, 0, 0));
+                            break;
+                        }
+                        case 3: {
+                            imageThree.setBackgroundColor(Color.rgb(139, 0, 0));
+                            break;
+                        }
+                        case 4: {
+                            imageFour.setBackgroundColor(Color.rgb(139, 0, 0));
+                            break;
+                        }
+                    }
+
+//                    MediaPlayer mp = new MediaPlayer();
+
+                    try {
+//                        mp.setDataSource(R.raw.yay);
+//                        mp.prepare();
+//                        mp.start();
+
+//                        int resID=getResources().getIdentifier(fname, "raw", getPackageName());
+
+                        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.boo);
+                        mediaPlayer.start();
+                    } catch (Exception e) {
+                        Log.v("heyyy", "else Exception : " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        ref1 = FirebaseDatabase.getInstance().getReference();
+                        ref2 = ref1.child("Progress");
+                        if (quizModel != null && quizModel.getCorrectAnswer() != null) {
+                            ref2.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).push().setValue(type_Of_Actvitiy
+                                    + " , He Answered Answer Number : " + checked + ", And The Correct Answer is Answer Number "
+                                    + quizModel.getCorrectAnswer() + " ");
+                            finish();
+                        } else {
+                            Toast.makeText(QuizActivity.this, "Please Choose an Answer", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, 3000);
+
 
                 break;
             case R.id.image_one:
+            case R.id.answer_one:
                 checked = 1;
                 answerOne.setChecked(true);
                 answerTwo.setChecked(false);
@@ -138,6 +242,7 @@ public class QuizActivity extends AppCompatActivity {
                 answerFour.setChecked(false);
                 break;
             case R.id.image_two:
+            case R.id.answer_two:
                 checked = 2;
                 answerTwo.setChecked(true);
                 answerOne.setChecked(false);
@@ -145,6 +250,7 @@ public class QuizActivity extends AppCompatActivity {
                 answerFour.setChecked(false);
                 break;
             case R.id.image_three:
+            case R.id.answer_three:
                 checked = 3;
                 answerThree.setChecked(true);
                 answerTwo.setChecked(false);
@@ -152,6 +258,7 @@ public class QuizActivity extends AppCompatActivity {
                 answerFour.setChecked(false);
                 break;
             case R.id.image_four:
+            case R.id.answer_four:
                 checked = 4;
                 answerFour.setChecked(true);
                 answerTwo.setChecked(false);
@@ -160,6 +267,7 @@ public class QuizActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
 
 }

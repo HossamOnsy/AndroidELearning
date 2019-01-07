@@ -7,12 +7,24 @@
     tools:context=".activity.ProgressActivity">
 
     <Button
+        android:id="@+id/profile_ofstudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16sp"
+        android:text="@string/check_profile_of_student"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/feedback_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view"
+        android:layout_margin="16sp"
         android:textAllCaps="false"
         android:text="Add Feedback"/>
 

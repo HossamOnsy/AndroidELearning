@@ -30,6 +30,22 @@
     <string name="create_a_quiz">Create a Quiz</string>
     <string name="create_an_activity">Create an Activity</string>
     <string name="create_a_lesson">Create a Lesson</string>
+    <string name="check_profile_of_student">Check Profile Of Student</string>
+    <string name="hello">hello</string>
+    <string name="lessons">Lessons</string>
+    <string name="activities">Activities</string>
+    <string name="quizzes">Quizzes</string>
+    <string name="auth_failed">Authentication failed.</string>
+    <string name="invalid_em">Invalid Email / Password</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="name">Name</string>
+
+    <string-array name="studentmenu">
+        <!--<item>Information</item>-->
+        <item>My Profile</item>
+        <item>Logout</item>
+    </string-array>
 
     <string-array name="menu">
         <!--<item>Information</item>-->

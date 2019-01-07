@@ -3,16 +3,22 @@ package com.salwa.androidelearning.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.Guideline;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,11 +56,16 @@ public class StudentMainActivity extends AppCompatActivity {
     Guideline guideline1;
     @BindView(R.id.feedback_txt)
     TextView feedbackTxt;
+    @BindView(R.id.left_drawer)
+    ListView leftDrawer;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
     private DatabaseReference mDatabase;
     SharedPreferences myPref;
 
 
     StudentModel studentModel;
+    ActionBarDrawerToggle mDrawerToggle;
 
 
     DatabaseReference ref1;
@@ -66,6 +77,43 @@ public class StudentMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
         ButterKnife.bind(this);
+
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
+        };
+        drawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+//        leftDrawer = (ListView) findViewById(R.id.left_drawer);
+        leftDrawer.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        startActivity(new Intent(StudentMainActivity.this, StudentProfile.class));
+
+                        break;
+
+                    case 1:
+                        finishAffinity();
+                        startActivity(new Intent(StudentMainActivity.this, TeacherOrStudentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        break;
+                }
+//                messageTextView.setText("Menu Item at position " + position + " clicked.");
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+
         myPref = getsharedPref(StudentMainActivity.this);
         final String TAG = "erorrr";
         auth = FirebaseAuth.getInstance();
@@ -84,6 +132,30 @@ public class StudentMainActivity extends AppCompatActivity {
         getModelFromDatabase();
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     private void getModelFromDatabase() {

@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
             if (edEmail.getText().toString().equals("") || edPassword.getText().toString().equals("")) {
-                Toast.makeText(this, "Invalid Email / Password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.invalid_em), Toast.LENGTH_SHORT).show();
             } else {
                 progressBar.setVisibility(View.VISIBLE);
                 auth.signInWithEmailAndPassword(edEmail.getText().toString(), edPassword.getText().toString())
@@ -117,8 +117,9 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
 
                                 } else {
+//                                    task.getResult().
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
                                             Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                 }
@@ -165,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
                                 Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }
@@ -195,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                     } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
                                 Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }

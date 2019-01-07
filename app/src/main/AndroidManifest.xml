@@ -51,7 +51,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.ProgressActivity" />
         <activity android:name=".activity.QuizzesCreation" />
-        <activity android:name=".activity.QuizActivity"></activity>
+        <activity android:name=".activity.QuizActivity" />
+        <activity android:name=".activity.StudentProfile"></activity>
     </application>
 
 </manifest>

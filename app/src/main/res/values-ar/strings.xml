@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AndroidELearning</string>
+    <string name="email">البريد الالكتروني </string>
+    <string name="password">كلمة السر </string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="retype_password">اعادة كلمة السر</string>
+    <string name="sign_up_here">انشاء حساب</string>
+    <string name="reset_password">اعادة كلمة السر</string>
+    <string name="forgot_password">فقدان كلمة السر</string>
+    <string name="hello_and_welcome_to_our_app">Hello and Welcome To Our App</string>
+    <string name="role">Role</string>
+    <string name="age">السن</string>
+    <string name="teacher">المدرس</string>
+    <string name="Creator">صانع المحتوى</string>
+    <string name="male">ذكر</string>
+    <string name="female">انثى</string>
+    <string name="contact_info">طريقة التواصل</string>
+    <string name="student">تلميذ</string>
+    <string name="title_activity_teacher_temp_main">TeacherTempMain</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="create_a_quiz">انشاء سؤال</string>
+    <string name="create_an_activity">انشاء نشاط</string>
+    <string name="create_a_lesson">انشاء درس</string>
+    <string name="check_profile_of_student">تفقد ملف التلميذ</string>
+    <string name="hello">hello</string>
+
+    <string name="lessons">الدروس</string>
+    <string name="activities">الانشطة</string>
+    <string name="quizzes">الاسئلة</string>
+    <string name="auth_failed">لم يتم التمكن من الدخول من فضلك حاول مرة اخرى</string>
+    <string name="invalid_em">كلمة المرور او البريد الالكتروني خطأ</string>
+    <string name="done">تم</string>
+    <string name="cancel">الغاء</string>
+    <string name="name">الاسم</string>
+
+
+    <string-array name="studentmenu">
+        <!--<item>Information</item>-->
+        <item>ملفي</item>
+        <item>الخروج</item>
+    </string-array>
+
+    <string-array name="menu">
+        <!--<item>Information</item>-->
+        <item>انشاء محتوى</item>
+        <item>تفقد نشاط التلميذ</item>
+        <item>الخروج</item>
+    </string-array>
+</resources>
