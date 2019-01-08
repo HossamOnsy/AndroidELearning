@@ -20,12 +20,17 @@ public class CreationActivity extends AppCompatActivity {
     Button activityBtn;
     @BindView(R.id.quiz_btn)
     Button quizBtn;
+    String path = "English";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation);
         ButterKnife.bind(this);
+
+        if(getIntent().hasExtra("Subject")){
+            path = getIntent().getStringExtra("Subject");
+        }
     }
 
     @OnClick({R.id.lesson_btn, R.id.activity_btn, R.id.quiz_btn})
@@ -33,15 +38,15 @@ public class CreationActivity extends AppCompatActivity {
         switch (view.getId()) {
 
             case R.id.lesson_btn:
-                startActivity(new Intent(CreationActivity.this, LessonCreationActivity.class).putExtra("databasePath", "Lessons"));
+                startActivity(new Intent(CreationActivity.this, LessonCreationActivity.class).putExtra("Subject",path).putExtra("databasePath", "Lessons"));
                 break;
 
             case R.id.activity_btn:
-                startActivity(new Intent(CreationActivity.this, LessonCreationActivity.class).putExtra("databasePath", "Activities"));
+                startActivity(new Intent(CreationActivity.this, LessonCreationActivity.class).putExtra("Subject",path).putExtra("databasePath", "Activities"));
                 break;
 
             case R.id.quiz_btn:
-                startActivity(new Intent(CreationActivity.this, QuizzesCreation.class).putExtra("databasePath", "Quizzes"));
+                startActivity(new Intent(CreationActivity.this, QuizzesCreation.class).putExtra("Subject",path).putExtra("databasePath", "Quizzes"));
                 break;
         }
     }

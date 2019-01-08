@@ -42,7 +42,7 @@
     <string name="name">Name</string>
 
     <string-array name="studentmenu">
-        <!--<item>Information</item>-->
+        <item>Home</item>
         <item>My Profile</item>
         <item>Logout</item>
     </string-array>

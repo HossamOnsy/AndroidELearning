@@ -33,6 +33,7 @@ public class LessonsAndActivitiesActivity extends AppCompatActivity {
     private CustomAdapter mAdapter ;
     DividerItemDecoration mDividerItemDecoration;
     LinearLayoutManager layoutManager;
+    String path = "English";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class LessonsAndActivitiesActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("databasePath")) {
             databasePath = getIntent().getStringExtra("databasePath");
+        }
+        if(getIntent().hasExtra("Subject")){
+            path = getIntent().getStringExtra("Subject");
         }
         ref1 = FirebaseDatabase.getInstance().getReference();
 
@@ -63,7 +67,7 @@ public class LessonsAndActivitiesActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        ref2 = ref1.child(databasePath);
+        ref2 = ref1.child(path).child(databasePath);
         ref2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

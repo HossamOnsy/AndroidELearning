@@ -46,7 +46,7 @@
 
 
     <string-array name="studentmenu">
-        <!--<item>Information</item>-->
+        <item>الرئيسية</item>
         <item>ملفي</item>
         <item>الخروج</item>
     </string-array>

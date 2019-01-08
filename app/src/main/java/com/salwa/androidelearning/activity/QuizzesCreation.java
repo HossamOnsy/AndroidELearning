@@ -78,6 +78,7 @@ public class QuizzesCreation extends AppCompatActivity {
     private static int ACTIVITY_CHOOSE_ANSWERFOUR = 1005;
     @BindView(R.id.upload_quiz)
     Button uploadQuiz;
+    String path = "English";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,10 @@ public class QuizzesCreation extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         quizModel = new QuizModel();
+
+        if(getIntent().hasExtra("Subject")){
+            path = getIntent().getStringExtra("Subject");
+        }
 
     }
 
@@ -470,8 +475,9 @@ public class QuizzesCreation extends AppCompatActivity {
         }
 
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(databasePath);
-        mDatabase.push().setValue(quizModel);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(this.path);
+        mDatabase.child(databasePath).push().setValue(quizModel);
+//        mDatabase.push().setValue(quizModel);
         finish();
 
 //        try {

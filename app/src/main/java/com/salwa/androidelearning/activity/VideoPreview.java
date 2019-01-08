@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 public class VideoPreview extends AppCompatActivity {
     String uri;
 
+
     SimpleExoPlayer player;
     @BindView(R.id.sepv)
     SimpleExoPlayerView sepv;

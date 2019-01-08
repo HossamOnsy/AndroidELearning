@@ -73,6 +73,7 @@ public class LessonCreationActivity extends AppCompatActivity {
     LinearLayout container;
     StorageReference ref;
     String databasePath = "Lessons";
+    String path = "English";
 
 
     private static int ACTIVITY_CHOOSE_FILE = 1001;
@@ -90,6 +91,11 @@ public class LessonCreationActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra("databasePath")){
             databasePath = getIntent().getStringExtra("databasePath");
+        }
+
+
+        if(getIntent().hasExtra("Subject")){
+            path = getIntent().getStringExtra("Subject");
         }
 
     }
@@ -426,8 +432,8 @@ public class LessonCreationActivity extends AppCompatActivity {
 
     private void addLessonToDatabse(String path) {
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(databasePath);
-        mDatabase.push().setValue(path);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(this.path);
+        mDatabase.child(databasePath).push().setValue(path);
 
         try {
             Uri uri = Uri.parse(path);

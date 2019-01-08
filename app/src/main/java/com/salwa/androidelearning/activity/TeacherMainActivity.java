@@ -93,7 +93,7 @@ public class TeacherMainActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         if (roleAuthorized)
-                            startActivity(new Intent(TeacherMainActivity.this, CreationActivity.class));
+                            startActivity(new Intent(TeacherMainActivity.this, PreCreationActivity.class));
                         else
                             Toast.makeText(TeacherMainActivity.this, "You Can't Create Module ... Appologies !!! ", Toast.LENGTH_SHORT).show();
                         break;

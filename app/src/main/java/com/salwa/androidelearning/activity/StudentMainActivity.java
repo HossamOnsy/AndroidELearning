@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,6 +62,16 @@ public class StudentMainActivity extends AppCompatActivity {
     ListView leftDrawer;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @BindView(R.id.cardview)
+    CardView cardview;
+    @BindView(R.id.buttonscontainer)
+    LinearLayout buttonscontainer;
+    @BindView(R.id.english_btn)
+    Button englishBtn;
+    @BindView(R.id.arabic_btn)
+    Button arabicBtn;
+    @BindView(R.id.subjectscontainer)
+    LinearLayout subjectscontainer;
     private DatabaseReference mDatabase;
     SharedPreferences myPref;
 
@@ -99,11 +111,18 @@ public class StudentMainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(StudentMainActivity.this, StudentProfile.class));
+//                        startActivity(new Intent(StudentMainActivity.this, StudentProfile.class));
+                        subjectscontainer.setVisibility(View.VISIBLE);
+                        buttonscontainer.setVisibility(View.GONE);
 
                         break;
 
                     case 1:
+                        startActivity(new Intent(StudentMainActivity.this, StudentProfile.class));
+//                        startActivity(new Intent(StudentMainActivity.this, TeacherOrStudentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        break;
+
+                    case 2:
                         finishAffinity();
                         startActivity(new Intent(StudentMainActivity.this, TeacherOrStudentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
@@ -262,18 +281,61 @@ public class StudentMainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    @OnClick({R.id.lesson_btn, R.id.activity_btn, R.id.quiz_btn})
+    @OnClick({R.id.lesson_btn, R.id.activity_btn, R.id.quiz_btn,R.id.english_btn, R.id.arabic_btn})
     public void onViewClicked(View view) {
+        SharedPreferences settings = getSharedPreferences("defauty", MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+
+        String value = settings.getString("Subject", "");
         switch (view.getId()) {
+            case R.id.english_btn:
+
+
+                editor.putString("Subject", "English");
+                editor.commit();
+                subjectscontainer.setVisibility(View.GONE);
+                buttonscontainer.setVisibility(View.VISIBLE);
+
+
+//                startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("databasePath", "Lessons"));
+                break;
+            case R.id.arabic_btn:
+
+                editor.putString("Subject", "Arabic");
+                editor.commit();
+
+                subjectscontainer.setVisibility(View.GONE);
+                buttonscontainer.setVisibility(View.VISIBLE);
+
+
+//                startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("databasePath", "Lessons"));
+                break;
             case R.id.lesson_btn:
-                startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("databasePath", "Lessons"));
+                if(value!=null&&value.equals("English")||value.equals(""))
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject","English").putExtra("databasePath", "Lessons"));
+                else
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject",value).putExtra("databasePath", "Lessons"));
                 break;
             case R.id.activity_btn:
-                startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("databasePath", "Activities"));
+
+                if(value!=null&&value.equals("English")||value.equals(""))
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject","English").putExtra("databasePath", "Activities"));
+                else
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject",value).putExtra("databasePath", "Activities"));
+
+//                startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("databasePath", "Activities"));
                 break;
             case R.id.quiz_btn:
-                startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("databasePath", "Quizzes"));
+                if(value!=null&&value.equals("English")||value.equals(""))
+                    startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("Subject","English").putExtra("databasePath", "Quizzes"));
+                else
+                    startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("Subject",value).putExtra("databasePath", "Quizzes"));
+
+
+//                startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("databasePath", "Quizzes"));
                 break;
         }
     }
+
+
 }

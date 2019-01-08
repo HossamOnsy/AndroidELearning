@@ -52,7 +52,8 @@
         <activity android:name=".activity.ProgressActivity" />
         <activity android:name=".activity.QuizzesCreation" />
         <activity android:name=".activity.QuizActivity" />
-        <activity android:name=".activity.StudentProfile"></activity>
+        <activity android:name=".activity.StudentProfile" />
+        <activity android:name=".activity.PreCreationActivity"></activity>
     </application>
 
 </manifest>
