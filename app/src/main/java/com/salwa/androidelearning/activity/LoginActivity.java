@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.forgot_password)
     TextView forgotPassword;
     private FirebaseAuth auth;
-    private String type = "Students";
+    private String type = "students";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

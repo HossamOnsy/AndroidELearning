@@ -13,21 +13,21 @@ public class StudentModel implements Parcelable {
     private String teacher;
     private String myclass;
     private String teacherfeedback;
-    private String ID;
+    private String id;
     private String contactNumber;
 
     public StudentModel() {
 
     }
 
-    public StudentModel(String name, String email, String age, String gender, String role, String teacher, String ID, String contactNumber) {
+    public StudentModel(String name, String email, String age, String gender, String role, String teacher, String id, String contactNumber) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.gender = gender;
         this.role = role;
         this.teacher = teacher;
-        this.ID = ID;
+        this.id = id;
         this.contactNumber = contactNumber;
     }
 
@@ -96,11 +96,11 @@ public class StudentModel implements Parcelable {
     }
 
     public String getID() {
-        return ID;
+        return id;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.id = ID;
     }
 
     public String getContactNumber() {
@@ -126,7 +126,7 @@ public class StudentModel implements Parcelable {
         dest.writeString(this.teacher);
         dest.writeString(this.myclass);
         dest.writeString(this.teacherfeedback);
-        dest.writeString(this.ID);
+        dest.writeString(this.id);
         dest.writeString(this.contactNumber);
     }
 
@@ -139,7 +139,7 @@ public class StudentModel implements Parcelable {
         this.teacher = in.readString();
         this.myclass = in.readString();
         this.teacherfeedback = in.readString();
-        this.ID = in.readString();
+        this.id = in.readString();
         this.contactNumber = in.readString();
     }
 

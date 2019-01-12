@@ -163,7 +163,7 @@ public class RegisterationActivity extends AppCompatActivity {
                             String userId = auth.getCurrentUser().getUid();
                             if (role.equals("student")) {
                                 mDatabase = FirebaseDatabase.getInstance().getReference("Students");
-                                StudentModel studentModel = new StudentModel(userId, name, email, age, gender, role, "", contact.getText().toString());
+                                StudentModel studentModel = new StudentModel(name , email, age, gender, role, "",userId, contact.getText().toString());
 
                                 mDatabase.child(userId).setValue(studentModel);
                                 finishAffinity();

@@ -35,10 +35,10 @@ public class TeacherOrStudentActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.student_btn:
 
-                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","Students"));
+                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","students"));
                 break;
             case R.id.teacher_btn:
-                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","Teachers"));
+                startActivity(new Intent(TeacherOrStudentActivity.this,LoginActivity.class).putExtra("type","teachers"));
                 break;
             case R.id.language:{
                 SharedPreferences settings = getSharedPreferences("defauty", MODE_PRIVATE);
