@@ -192,7 +192,7 @@ public class StudentMainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (studentModel.getTeacher() == null || studentModel.getTeacher().equals("")) {
+                if (studentModel==null || studentModel.getTeacher() == null || studentModel.getTeacher().equals("")) {
                     onCreateDialog();
                 }
             }

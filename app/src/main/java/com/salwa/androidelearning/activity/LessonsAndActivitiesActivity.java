@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.salwa.androidelearning.CustomAdapter;
 import com.salwa.androidelearning.R;
-import com.salwa.androidelearning.TeacherActivity;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,9 @@ public class LessonsAndActivitiesActivity extends AppCompatActivity {
     ArrayList<String> stringArrayList = new ArrayList<>();
     DatabaseReference ref1;
     DatabaseReference ref2;
-    private CustomAdapter mAdapter ;
+    @BindView(R.id.title)
+    TextView title;
+    private CustomAdapter mAdapter;
     DividerItemDecoration mDividerItemDecoration;
     LinearLayoutManager layoutManager;
     String path = "English";
@@ -42,11 +44,12 @@ public class LessonsAndActivitiesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-
         if (getIntent().hasExtra("databasePath")) {
             databasePath = getIntent().getStringExtra("databasePath");
+            title.setText("Click on " + databasePath + "to view the video");
+
         }
-        if(getIntent().hasExtra("Subject")){
+        if (getIntent().hasExtra("Subject")) {
             path = getIntent().getStringExtra("Subject");
         }
         ref1 = FirebaseDatabase.getInstance().getReference();
@@ -58,7 +61,7 @@ public class LessonsAndActivitiesActivity extends AppCompatActivity {
         super.onStart();
 
         stringArrayList = new ArrayList<String>();
-        mAdapter = new CustomAdapter(stringArrayList , LessonsAndActivitiesActivity.this,databasePath);
+        mAdapter = new CustomAdapter(stringArrayList, LessonsAndActivitiesActivity.this, databasePath);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
