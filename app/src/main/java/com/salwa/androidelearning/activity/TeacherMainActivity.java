@@ -131,17 +131,11 @@ public class TeacherMainActivity extends AppCompatActivity {
 
                 SharedPreferences settings = getSharedPreferences("defauty", MODE_PRIVATE);
                 String value = settings.getString("key", "");
-                if(value.equals("en")) {
+
                     contact.setText(String.format("Contact : %s", user != null ? user.getContactNumber() : null));
                     age.setText(String.format("Age : %s", user != null ? user.getAge() : null));
                     email.setText(String.format("Email : %s", user != null ? user.getEmail() : null));
                     messageTextView.setText(String.format("Name : %s", user != null ? user.getName() : null));
-                }else{
-                    contact.setText(String.format("%s : طريقة التواصل", user != null ? user.getContactNumber() : null));
-                    age.setText(String.format("%s : العمر", user != null ? user.getAge() : null));
-                    email.setText(String.format("%s : البريد الالكتروني", user != null ? user.getEmail() : null));
-                    messageTextView.setText(String.format("%s : الاسم", user != null ? user.getName() : null));
-                }
 
 
                 if (user != null) {

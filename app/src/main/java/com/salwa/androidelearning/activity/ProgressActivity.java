@@ -102,14 +102,10 @@ public class ProgressActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences("defauty", MODE_PRIVATE);
         String value = settings.getString("key", "");
-        if(value.equals("en")) {
+
+
             dialogBuilder.setTitle("Feed Back");
             dialogBuilder.setMessage("Enter text below");
-        }else{
-
-            dialogBuilder.setTitle("التقييم");
-            dialogBuilder.setMessage("من فضلك ادخل تقييمك هنا");
-        }
         dialogBuilder.setPositiveButton(getString(R.string.done), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
@@ -118,6 +114,7 @@ public class ProgressActivity extends AppCompatActivity {
                 DatabaseReference ref2 = ref1.child("Students");
 
                 ref2.child(uid).child("teacherfeedback").setValue(edt.getText().toString());
+
                 feedbackBtn.setEnabled(false);
             }
         });

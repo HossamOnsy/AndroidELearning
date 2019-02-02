@@ -40,8 +40,6 @@
     <string name="quizzes">الاسئلة</string>
     <string name="auth_failed">لم يتم التمكن من الدخول من فضلك حاول مرة اخرى</string>
     <string name="invalid_em">كلمة المرور او البريد الالكتروني خطأ</string>
-    <string name="done">تم</string>
-    <string name="cancel">الغاء</string>
     <string name="name">الاسم</string>
 
 
