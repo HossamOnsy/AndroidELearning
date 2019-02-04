@@ -106,6 +106,8 @@ public class TeacherMainActivity extends AppCompatActivity {
 
 
                     case 2:
+                        if(auth!=null)
+                        auth.signOut();
                         finishAffinity();
                         startActivity(new Intent(TeacherMainActivity.this, TeacherOrStudentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;

@@ -83,6 +83,7 @@ public class StudentMainActivity extends AppCompatActivity {
     DatabaseReference ref1;
     DatabaseReference ref2;
     ArrayList<NameIdModel> NameIdList = new ArrayList<>();
+    boolean value = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +91,12 @@ public class StudentMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_main);
         ButterKnife.bind(this);
 
-
+        value=true;
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(!getIntent().hasExtra("none")){
+            finish();
+        }
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name) {
             @Override
@@ -123,8 +127,11 @@ public class StudentMainActivity extends AppCompatActivity {
                         break;
 
                     case 2:
-                        finishAffinity();
+                        if(auth!=null)
+                        auth.signOut();
+                        finish();
                         startActivity(new Intent(StudentMainActivity.this, TeacherOrStudentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
                         break;
                 }
 //                messageTextView.setText("Menu Item at position " + position + " clicked.");
@@ -148,7 +155,7 @@ public class StudentMainActivity extends AppCompatActivity {
 //        Log.v("heyyy",user.teacher);
         ref1 = FirebaseDatabase.getInstance().getReference();
 
-        getModelFromDatabase();
+      //  getModelFromDatabase();
 
 
     }
@@ -177,32 +184,13 @@ public class StudentMainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    ValueEventListener l=null;
+
     private void getModelFromDatabase() {
 
 
-        ref1.child("Students").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                studentModel = dataSnapshot.getValue(StudentModel.class);
-                if (studentModel != null) {
-                    if (studentModel.getTeacherfeedback() != null && !studentModel.getTeacherfeedback().equals("") &&
-                            studentModel.getTeacher() != null && !studentModel.getTeacher().equals("")) {
-                        feedbackTxt.setText(String.format("%s : %s", studentModel.getTeacher(), studentModel.getTeacherfeedback()));
-                    }
-                }
 
-                if (studentModel==null || studentModel.getTeacher() == null || studentModel.getTeacher().equals("")) {
-                    onCreateDialog();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
     }
 
     int selected = 0;
@@ -218,7 +206,7 @@ public class StudentMainActivity extends AppCompatActivity {
         final Spinner spinnerd = view.findViewById(R.id.spinnerd);
 
         ref2 = ref1.child("Teachers");
-        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList Userlist = new ArrayList<String>();
@@ -281,7 +269,70 @@ public class StudentMainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    @OnClick({R.id.lesson_btn, R.id.activity_btn, R.id.quiz_btn,R.id.english_btn, R.id.arabic_btn})
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(l==null){
+            l = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    studentModel = dataSnapshot.getValue(StudentModel.class);
+
+                    if(!value){
+                       finish();
+                    }
+                    if (studentModel != null) {
+                        if (studentModel.getTeacherfeedback() != null && !studentModel.getTeacherfeedback().equals("") &&
+                                studentModel.getTeacher() != null && !studentModel.getTeacher().equals("")) {
+                            feedbackTxt.setText(String.format("%s : %s", studentModel.getTeacher(), studentModel.getTeacherfeedback()));
+                        }
+                    }
+
+                    if (studentModel == null || studentModel.getTeacher() == null || studentModel.getTeacher().equals("")) {
+                        if(!getIntent().hasExtra("none")){
+                            StudentMainActivity.super.onBackPressed();
+                        }
+                        onCreateDialog();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            };
+            ref1.child("Students").child(auth.getCurrentUser().getUid()).addValueEventListener(l);
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(l!=null){
+            l=null;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+            if(l!=null){
+                l=null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+            if(l!=null){
+                l=null;
+            }
+    }
+
+    @OnClick({R.id.lesson_btn, R.id.activity_btn, R.id.quiz_btn, R.id.english_btn, R.id.arabic_btn})
     public void onViewClicked(View view) {
         SharedPreferences settings = getSharedPreferences("defauty", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -311,25 +362,25 @@ public class StudentMainActivity extends AppCompatActivity {
 //                startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("databasePath", "Lessons"));
                 break;
             case R.id.lesson_btn:
-                if(value!=null&&value.equals("English")||value.equals(""))
-                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject","English").putExtra("databasePath", "Lessons"));
+                if (value != null && value.equals("English") || value.equals(""))
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject", "English").putExtra("databasePath", "Lessons"));
                 else
-                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject",value).putExtra("databasePath", "Lessons"));
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject", value).putExtra("databasePath", "Lessons"));
                 break;
             case R.id.activity_btn:
 
-                if(value!=null&&value.equals("English")||value.equals(""))
-                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject","English").putExtra("databasePath", "Activities"));
+                if (value != null && value.equals("English") || value.equals(""))
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject", "English").putExtra("databasePath", "Activities"));
                 else
-                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject",value).putExtra("databasePath", "Activities"));
+                    startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("Subject", value).putExtra("databasePath", "Activities"));
 
 //                startActivity(new Intent(StudentMainActivity.this, LessonsAndActivitiesActivity.class).putExtra("databasePath", "Activities"));
                 break;
             case R.id.quiz_btn:
-                if(value!=null&&value.equals("English")||value.equals(""))
-                    startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("Subject","English").putExtra("databasePath", "Quizzes"));
+                if (value != null && value.equals("English") || value.equals(""))
+                    startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("Subject", "English").putExtra("databasePath", "Quizzes"));
                 else
-                    startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("Subject",value).putExtra("databasePath", "Quizzes"));
+                    startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("Subject", value).putExtra("databasePath", "Quizzes"));
 
 
 //                startActivity(new Intent(StudentMainActivity.this, QuizzesActivity.class).putExtra("databasePath", "Quizzes"));

@@ -189,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (user != null && user.getRole().toLowerCase().equals("student")) {
 
-                        startActivity(new Intent(LoginActivity.this, StudentMainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, StudentMainActivity.class).putExtra("none","none"));
 //                                    startActivity(new Intent(LoginActivity.this, TeacherTempMain.class));
 
                         finishAffinity();
